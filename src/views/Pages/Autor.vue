@@ -37,7 +37,7 @@
                 <b-row>
                   <b-col cols="12" class="text-right">
                     <a
-                      href="#!"
+                      href="javascript:void(0);"
                       @click="submitForm"
                       class="btn btn-sm btn-primary"
                       >Salvar</a
@@ -73,14 +73,14 @@
                   class="d-flex justify-content-end pr-1"
                 >
                   <a
-                    href="#!"
-                    @click="editAssunto(row)"
+                    href="javascript:void(0);"
+                    @click="editAutor(row)"
                     class="btn btn-sm btn-info"
                     >Editar</a
                   >
                   <a
-                    href="#!"
-                    @click="deleteAssunto(row.id)"
+                    href="javascript:void(0);"
+                    @click="deleteAutor(row.id)"
                     class="btn btn-sm btn-warning"
                     >Excluir</a
                   >
@@ -131,7 +131,7 @@ export default {
     limparCampos() {
       this.ator = {
         nome: ""
-      }
+      };
     },
     fetchAutores(page = 1) {
       this.isLoading = true;
@@ -178,7 +178,7 @@ export default {
               showConfirmButton: false,
               timer: 1500
             });
-            this.limparCampos()
+            this.limparCampos();
           })
           .catch(error => {
             this.showErrorAlert = true;
@@ -188,10 +188,10 @@ export default {
         this.showErrorAlert = true;
       }
     },
-    editAssunto(ator) {
+    editAutor(ator) {
       this.ator = { ...ator };
     },
-    deleteAssunto(id) {
+    deleteAutor(id) {
       this.$swal({
         title: "Deseja Remover esse registro?",
         showCancelButton: true,
@@ -201,21 +201,29 @@ export default {
         cancelButtonText: "Não"
       }).then(result => {
         if (result.isConfirmed) {
-          this.$swal.fire({
-            title: "Excluido!",
-            icon: "success",
-            text: "Operação realizada com sucesso",
-            showConfirmButton: false,
-            timer: 1500
-          });
           this.$http
             .delete(`/autor/${id}`)
             .then(() => {
+              this.$swal.fire({
+                title: "Excluído!",
+                icon: "success",
+                text: "Autor removido com sucesso.",
+                showConfirmButton: false,
+                timer: 1500
+              });
               this.fetchAutores();
             })
             .catch(error => {
-              this.showErrorAlert = true;
-              console.error(error);
+              if (error.response && error.response.data) {
+                this.$swal.fire({
+                  title: "Não foi possivel",
+                  icon: "info",
+                  text: "Existem livros atribuídos a essse Autor.",
+                  showConfirmButton: true
+                });
+              } else {
+                console.error("Erro ao excluir Autor:", error);
+              }
             })
             .finally(() => {
               this.isLoading = false;

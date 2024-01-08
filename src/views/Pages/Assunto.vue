@@ -37,7 +37,7 @@
                 <b-row>
                   <b-col cols="12" class="text-right">
                     <a
-                      href="#!"
+                      href="javascript:void(0);"
                       @click="submitForm"
                       class="btn btn-sm btn-primary"
                       >Salvar</a
@@ -70,14 +70,14 @@
               <b-row align-v="center" slot="header">
                 <b-col cols="12" sm="12" class="d-flex justify-content-end pr-1">
                   <a
-                    href="#!"
+                    href="javascript:void(0);"
                     @click="editAssunto(row)"
                     class="btn btn-sm btn-info"
                     >Editar</a
                   >
                
                   <a
-                    href="#!"
+                    href="javascript:void(0);"
                     @click="deleteAssunto(row.id)"
                     class="btn btn-sm btn-warning"
                     >Excluir</a
@@ -200,21 +200,29 @@ export default {
         cancelButtonText: "Não"
       }).then(result => {
         if (result.isConfirmed) {
-          this.$swal.fire({
-            title: "Excluido!",
-            icon: "success",
-            text: "Operação realizada com sucesso",
-            showConfirmButton: false,
-            timer: 1500
-          });
           this.$http
             .delete(`/assunto/${id}`)
             .then(() => {
+              this.$swal.fire({
+                title: "Excluído!",
+                icon: "success",
+                text: "Assunto removido com sucesso.",
+                showConfirmButton: false,
+                timer: 1500
+              });
               this.fetchAssuntos();
             })
             .catch(error => {
-              this.showErrorAlert = true;
-              console.error(error);
+              if (error.response && error.response.data) {
+                this.$swal.fire({
+                  title: "Não foi possivel",
+                  icon: "info",
+                  text: "Existem livros atribuídos a essse Assunto.",
+                  showConfirmButton: true
+                });
+              } else {
+                console.error("Erro ao excluir Assunto:", error);
+              }
             })
             .finally(() => {
               this.isLoading = false;

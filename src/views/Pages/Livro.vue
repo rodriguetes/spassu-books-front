@@ -34,7 +34,7 @@
                     </base-input>                    
                   </b-col>
                   <b-col md="6" class="pt-10 col-md-6 d-flex align-items-center">                    
-                      <a href="#!" class="btn btn-sm btn-default"
+                      <a href="javascript:void(0);" class="btn btn-sm btn-default"
                         @click="gerarTituloIA"
                         >Gerar Titulo via IA</a 
                       >                    
@@ -129,7 +129,7 @@
                 <b-row>
                   <b-col cols="12" class="text-right">
                     <a
-                      href="#!"
+                      href="javascript:void(0);"
                       @click="submitForm"
                       class="btn btn-sm btn-primary"
                       >Salvar</a
@@ -169,13 +169,13 @@
                   class="d-flex justify-content-end pr-1"
                 >
                   <a
-                    href="#!"
+                    href="javascript:void(0);"
                     @click="editLivro(row)"
                     class="btn btn-sm btn-info"
                     >Editar</a
                   >
                   <a
-                    href="#!"
+                    href="javascript:void(0);"
                     @click="deleteLivro(row.id)"
                     class="btn btn-sm btn-warning"
                     >Excluir</a
@@ -252,7 +252,7 @@ export default {
         titulo: "",
         editora: "",
         edicao: "",
-        ano_publicacao: 2023,
+        ano_publicacao: "",
         valor: 0,
         autores: [],
         assuntos: []
