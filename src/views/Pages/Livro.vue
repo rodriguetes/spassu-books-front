@@ -39,7 +39,8 @@
                       style="height: 100%;"
                     >
                       <a href="#!" class="btn btn-sm btn-primary"
-                        >Sugestão Titulo via IA</a
+                        @click="gerarTituloIA"
+                        >Sugestão Titulo via IA</a 
                       >
                     </div>
                   </b-col>
