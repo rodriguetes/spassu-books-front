@@ -31,18 +31,13 @@
                       label="Titulo"
                       placeholder="Por favor preencha o titulo do Livro"
                     >
-                    </base-input>
+                    </base-input>                    
                   </b-col>
-                  <b-col md="6" class="pt-10">
-                    <div
-                      class="pt-10 col-md-6 d-flex align-items-center justify-content-center"
-                      style="height: 100%;"
-                    >
-                      <a href="#!" class="btn btn-sm btn-primary"
+                  <b-col md="6" class="pt-10 col-md-6 d-flex align-items-center">                    
+                      <a href="#!" class="btn btn-sm btn-default"
                         @click="gerarTituloIA"
-                        >Sugestão Titulo via IA</a 
-                      >
-                    </div>
+                        >Gerar Titulo via IA</a 
+                      >                    
                   </b-col>
                 </b-row>
                 <b-row>
