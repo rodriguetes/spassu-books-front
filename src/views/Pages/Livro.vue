@@ -23,7 +23,7 @@
             <b-form @submit.prevent="validateForm">
               <div class="pl-lg-4">
                 <b-row>
-                  <b-col md="6">
+                  <b-col md="5">
                     <base-input
                       type="text"
                       maxlength="40"
@@ -32,6 +32,16 @@
                       placeholder="Por favor preencha o titulo do Livro"
                     >
                     </base-input>
+                  </b-col>
+                  <b-col md="6" class="pt-10">
+                    <div
+                      class="pt-10 col-md-6 d-flex align-items-center justify-content-center"
+                      style="height: 100%;"
+                    >
+                      <a href="#!" class="btn btn-sm btn-primary"
+                        >Sugestão Titulo via IA</a
+                      >
+                    </div>
                   </b-col>
                 </b-row>
                 <b-row>
@@ -392,6 +402,29 @@ export default {
             });
         }
       });
+    },
+    gerarTituloIA() {
+      try {
+        const assuntoSelecionadoId = this.livro.assuntos[0];
+        const assuntoSelecionado = this.assuntosDisponiveis.find(
+          assunto => assunto.value === assuntoSelecionadoId
+        );
+        let assunto = assuntoSelecionado
+          ? assuntoSelecionado.text
+          : "qualquer coisa aleatoria";
+
+        this.$http
+          .post(`sugestaoLivro`, { assunto: assunto })
+          .then(response => {
+            this.livro.titulo = response.data.replace(/"/g, "");
+          })
+          .catch(error => {
+            this.showErrorAlert = true;
+          });
+      } catch (error) {
+        console.error(error);
+        this.showErrorAlert = true;
+      }
     },
     hideAlerts() {
       setTimeout(() => {
